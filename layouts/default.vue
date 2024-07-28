@@ -4,13 +4,14 @@
         <slot name="header" >
             <div class="header_wrap">
                 <h1> AKW consultants</h1>
-                <Button @click.prevent="logOutUser" icon="pi pi-sign-out" class="logout_btn" severity="warning" rounded outlined aria-label="Star" />
+                <Button @click.prevent="confirm2()" icon="pi pi-sign-out" class="logout_btn" severity="warning" rounded outlined aria-label="Star" />
 
             </div>
         </slot>
       </header>
       <main class="main_continer">
         <div class="sidebar_container" >
+            <ConfirmDialog id="confirm" />
 
             <Button label="Home" as="router-link" to="/" icon="pi pi-home" severity="info" />
             <Button  as="router-link" to="/admin" label="Admin" icon="pi pi-user" severity="info" :disabled="!is_admin" />
@@ -25,11 +26,38 @@
     </div>
   </template>
   <script setup>
+import { useConfirm } from "primevue/useconfirm";
+
 import { useRouter } from 'vue-router';
 const router=useRouter()
+const confirm = useConfirm();
 
 const is_admin=useCookie("isAdmin").value
 console.log(is_admin);
+const confirm2 = () => {
+    confirm.require({
+        message: 'Do you want to  Logout?',
+        header: 'Danger Zone',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Logout',
+            severity: 'warn'
+        },
+        accept: () => {
+            logOutUser()
+
+
+        },
+        reject: () => {
+        }
+    });
+};
 const logOutUser=async()=>{
     try {
         const access_token = useCookie('access_token').value

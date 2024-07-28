@@ -59,6 +59,7 @@ body: {
   id
 }
     })
+
     getImages()
 
   }catch(e){
