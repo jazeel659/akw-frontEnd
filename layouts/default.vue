@@ -33,7 +33,6 @@ const router=useRouter()
 const confirm = useConfirm();
 
 const is_admin=useCookie("isAdmin").value
-console.log(is_admin);
 const confirm2 = () => {
     confirm.require({
         message: 'Do you want to  Logout?',
@@ -116,6 +115,7 @@ display: flex;
 }
 .sidebar_container{
     width: 15%;
+    min-width: 105px !important;
     display: flex;
     flex-direction: column;
     gap: 0.8rem !important;
